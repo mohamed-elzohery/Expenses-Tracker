@@ -5,6 +5,7 @@ import Button from '../components/UI/Button';
 import IconBtn from '../components/UI/IconBtn';
 import { expenseContext } from '../context/context';
 import ExpenseForm from '../components/Form/ExpenseForm';
+import { storeExpense } from '../API/expensesAPIs';
 
 const isExpenseValid = (expense) => {
     console.log(expense.date)
@@ -50,6 +51,7 @@ const ManageExpenses = ({route, navigation}) => {
         const expense = transformFormData(newExpense);
         console.log(expense)
         if(isExpenseValid(expense)){
+            storeExpense(expense);
             setIsValid(true);
             dispatch({type: 'ADD_EXPENSE', payload: {newExpense: expense}});
             navigation.goBack();

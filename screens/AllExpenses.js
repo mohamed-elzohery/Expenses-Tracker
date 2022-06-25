@@ -5,6 +5,7 @@ import ExpensesOutput from '../components/ExpensesOutput/ExpensesOutput';
 
 const AllExpenses = () => {
   const {expenses} = useContext(expenseContext);
+  console.log(expenses)
   return <ExpensesOutput expenses={expenses} expensesPeriod="Total" />;
 }
 

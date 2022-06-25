@@ -14,6 +14,9 @@ export const reducer = (state, action) => {
             return exp;
         });
 
+        case 'SET_EXPENSES':
+        return action.payload.reverse();
+
         default:
             return state;
     }
