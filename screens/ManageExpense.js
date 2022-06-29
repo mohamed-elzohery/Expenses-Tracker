@@ -3,9 +3,9 @@ import React, { useContext, useLayoutEffect, useState } from 'react' ;
 import { GlobalStyles } from '../constants/styles';
 import Button from '../components/UI/Button';
 import IconBtn from '../components/UI/IconBtn';
-import { expenseContext } from '../context/context';
+import { expenseContext } from '../context/expenseCtx/context';
 import ExpenseForm from '../components/Form/ExpenseForm';
-import { storeExpense } from '../API/expensesAPIs';
+import { storeExpense, updateExpense, deleteExpense } from '../API/expensesAPIs';
 
 const isExpenseValid = (expense) => {
     console.log(expense.date)
@@ -31,6 +31,7 @@ const ManageExpenses = ({route, navigation}) => {
     };
 
     const onDeleteHandler = () => {
+        deleteExpense(expenseId);
         dispatch({type: 'DELETE_EXPENSE', payload: {id: expenseId}});
         navigation.goBack();
     }
@@ -38,6 +39,7 @@ const ManageExpenses = ({route, navigation}) => {
     const onUpdateHandler = (newExpense) => {
         const expense = transformFormData(newExpense);
         if(isExpenseValid(expense)){
+            updateExpense(expenseId, expense);
             setIsValid(true);
             dispatch({type: 'UPDATE_EXPENSE', payload: {id: expenseId,newExpense: expense}});
             navigation.goBack();

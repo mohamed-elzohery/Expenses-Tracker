@@ -5,7 +5,8 @@ import Icon from '@expo/vector-icons/Ionicons';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import ExpenseContextProvider from './context/context';
+import ExpenseContextProvider from './context/expenseCtx/context';
+import UIContextProvider from './context/UICtx/context';
 
 // Screens
 import AllExpenses from './screens/AllExpenses';
@@ -68,6 +69,7 @@ const App = () => {
   return (
     <>
       <StatusBar barStyle={'light-content'} backgroundColor={GlobalStyles.colors.primary500} />
+      <UIContextProvider>
       <ExpenseContextProvider>
         <NavigationContainer>
           <Stack.Navigator screenOptions={
@@ -85,6 +87,7 @@ const App = () => {
           </Stack.Navigator>
         </NavigationContainer>
       </ExpenseContextProvider>
+      </UIContextProvider>
     </>
   );
 };

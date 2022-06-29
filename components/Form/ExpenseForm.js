@@ -25,7 +25,7 @@ const ExpenseForm = ({onCancelHandler, sumbitLabel, onSumbitHandler, onDeleteHan
                 placeholder: 'amount',
                 onChangeText: onInputChangeHandler.bind(this, 'amount'),
                 keyboardType: 'decimal-pad',
-                value: formData.amount
+                value: formData.amount.toString()
             }}/>
 
             <FormInput label="Date" style={styles.inlineInput} inputProps={{

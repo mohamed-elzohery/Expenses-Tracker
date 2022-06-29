@@ -2,9 +2,15 @@ import ExpensesList from './ExpensesList';
 import { View, StyleSheet, Text } from 'react-native';
 import ExpensesSummary from './ExpensesSummary';
 import { GlobalStyles } from '../../constants/styles';
+import { useContext } from 'react';
+import { UIContext } from '../../context/UICtx/context';
+import Overlay from '../UI/Overlay';
 
 
 const ExpensesOutput = ({expenses, expensesPeriod}) => {
+    const {isLoading} = useContext(UIContext);
+    console.log(isLoading)
+    if(isLoading) return <Overlay />;
 
     return <View style={styles.container}>
         <ExpensesSummary expenses={expenses} expensesPeriod={expensesPeriod} />
