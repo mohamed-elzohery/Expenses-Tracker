@@ -14,19 +14,6 @@ const initialState = [];
 
 const ExpenseContextProvider = ({children}) => {
     const [expenses, dispatch] = useReducer(expenseReducer, initialState);
-    const {setIsLoading} = useContext(UIContext);
-
-    useEffect(() => {
-      const getRecentExpenses = async () => {
-          setIsLoading(true);
-          const expenses = await getExpenses();
-          dispatch({type: 'SET_EXPENSES', payload: expenses});
-          setIsLoading(false);
-      };
-
-      getRecentExpenses();
-  }, []);
-
 
     return <expenseContext.Provider value={{expenses, dispatch}}>{children}</expenseContext.Provider>
 }

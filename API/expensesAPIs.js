@@ -9,7 +9,7 @@ const axiosInstance = axios.create({
   });
 
 export const storeExpense = (expenseData) => {
-    axiosInstance.post('expenses.json', expenseData);
+    return axiosInstance.post('expenses.json', expenseData);
 }
 
 export const getExpenses = async () => {
@@ -32,10 +32,10 @@ export const getExpenses = async () => {
 }
 
 export const updateExpense =  (id, expenseData) => {
-    axiosInstance.put(`expenses/${id}.json`, expenseData);
+    return axiosInstance.put(`expenses/${id}.json`, expenseData);
 }
 
 export const deleteExpense =  (id) => {
-    axiosInstance.delete(`expenses/${id}.json`);
+    return axiosInstance.delete(`expenses/${id}.json`);
 }
 

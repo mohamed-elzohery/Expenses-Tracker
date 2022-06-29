@@ -5,13 +5,16 @@ import { GlobalStyles } from '../../constants/styles';
 import { useContext } from 'react';
 import { UIContext } from '../../context/UICtx/context';
 import Overlay from '../UI/Overlay';
+import { ErrorCTX } from '../../context/error/ErrorCtx';
+import ErrorOverlay from '../UI/ErrorOverlay';
 
 
 const ExpensesOutput = ({expenses, expensesPeriod}) => {
     const {isLoading} = useContext(UIContext);
+    const {isError} = useContext(ErrorCTX);
     console.log(isLoading)
     if(isLoading) return <Overlay />;
-
+    if(isError){return <ErrorOverlay />};
     return <View style={styles.container}>
         <ExpensesSummary expenses={expenses} expensesPeriod={expensesPeriod} />
         {expenses.length === 0 ? <View style={styles.noExpContainer}>

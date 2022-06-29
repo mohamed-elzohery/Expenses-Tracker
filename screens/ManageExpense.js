@@ -6,6 +6,7 @@ import IconBtn from '../components/UI/IconBtn';
 import { expenseContext } from '../context/expenseCtx/context';
 import ExpenseForm from '../components/Form/ExpenseForm';
 import { storeExpense, updateExpense, deleteExpense } from '../API/expensesAPIs';
+import {ErrorCTX} from '../context/error/ErrorCtx';
 
 const isExpenseValid = (expense) => {
     console.log(expense.date)
@@ -19,6 +20,7 @@ const isExpenseValid = (expense) => {
 const ManageExpenses = ({route, navigation}) => {
     const {expenses, dispatch} = useContext(expenseContext);
     const [isValid, setIsValid] = useState(true);
+    const {setIsError} = useContext(ErrorCTX); 
     const expenseId = route?.params?.expenseId;
     const isEditing = !!expenseId;
 
@@ -30,32 +32,42 @@ const ManageExpenses = ({route, navigation}) => {
         navigation.goBack();
     };
 
-    const onDeleteHandler = () => {
-        deleteExpense(expenseId);
-        dispatch({type: 'DELETE_EXPENSE', payload: {id: expenseId}});
+    const onDeleteHandler = async () => {
+        try{
+            await deleteExpense(expenseId);
+            dispatch({type: 'DELETE_EXPENSE', payload: {id: expenseId}});
+        }catch(err){
+            setIsError(true);
+        }
         navigation.goBack();
     }
 
-    const onUpdateHandler = (newExpense) => {
+    const onUpdateHandler = async (newExpense) => {
         const expense = transformFormData(newExpense);
         if(isExpenseValid(expense)){
-            updateExpense(expenseId, expense);
-            setIsValid(true);
-            dispatch({type: 'UPDATE_EXPENSE', payload: {id: expenseId,newExpense: expense}});
+            try{
+                await updateExpense(expenseId, expense);
+                setIsValid(true);
+                dispatch({type: 'UPDATE_EXPENSE', payload: {id: expenseId,newExpense: expense}});
+            }catch(err){
+                setIsError(true);
+            }
             navigation.goBack();
             return;
         }
         setIsValid(false);
     }
 
-    const onAddingHandler = (newExpense) => {
-        console.log(newExpense);
+    const onAddingHandler = async (newExpense) => {
         const expense = transformFormData(newExpense);
-        console.log(expense)
         if(isExpenseValid(expense)){
-            storeExpense(expense);
-            setIsValid(true);
-            dispatch({type: 'ADD_EXPENSE', payload: {newExpense: expense}});
+            try{
+                await storeExpense(expense);
+                setIsValid(true);
+                dispatch({type: 'ADD_EXPENSE', payload: {newExpense: expense}});
+            }catch(err){
+                setIsError(true);
+            }
             navigation.goBack();
             return;
         }
